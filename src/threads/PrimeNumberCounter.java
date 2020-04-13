@@ -1,20 +1,25 @@
 package threads;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrimeNumberCounter extends Thread {
+    private int id;
     private int number;
     private int startNumber;
     private int endNumber;
-    private boolean isPrime = true;
+    private boolean isPrime;
     List<Integer> primes;
+    List<Integer> localPrimes = new ArrayList<>();
 
-    public PrimeNumberCounter(int number, List<Integer> primes) {
+    public PrimeNumberCounter(int id, int number, List<Integer> primes) {
+        this.id = id;
         this.number = number;
         this.primes = primes;
     }
 
-    public PrimeNumberCounter(int startNumber, int endNumber, List<Integer> primes) {
+    public PrimeNumberCounter(int id, int startNumber, int endNumber, List<Integer> primes) {
+        this.id = id;
         this.startNumber = startNumber;
         this.endNumber = endNumber;
         this.primes = primes;
@@ -29,9 +34,7 @@ public class PrimeNumberCounter extends Thread {
             }
         }
         if (isPrime) {
-            synchronized (primes) {
-                primes.add(number);
-            }
+                localPrimes.add(number);
         }
     }
 
@@ -44,7 +47,10 @@ public class PrimeNumberCounter extends Thread {
                 calculate(i);
             }
         }
-        System.out.println("primes = " + primes);
+        System.out.println("localPrimes of Thread-" + id + " = " + localPrimes);
+        synchronized (primes){
+            primes.addAll(localPrimes);
+        }
     }
 
     public void setNumber(int number) {
