@@ -1,7 +1,7 @@
 package sequences.hierarchy;
 
 import sequences.karprabin.data.ResultSet;
-import sequences.karprabin.impl.RK;
+import sequences.karprabin.impl.KarpRabinAlgorithm;
 
 public class Searcher extends Thread {
 
@@ -12,7 +12,7 @@ public class Searcher extends Thread {
     private String pattern = "";
     private ResultSet matches;
     private ResultSet searchResult;
-    private RK searcherImpl = new RK();
+    private KarpRabinAlgorithm searcherImpl = new KarpRabinAlgorithm();
 
     public Searcher(Displayer displayer, int minPatternSize, String text, String name) {
         super(name);
@@ -36,8 +36,9 @@ public class Searcher extends Thread {
         ResultSet lastMatches = new ResultSet();
         for (int i = 0; i < text.length() - pattern.length() - 1; i++) {
             pattern = text.substring(i, i + patternSize);
-            if (searcherImpl.find(text, pattern).found())
-                lastMatches = searcherImpl.find(text, pattern);
+            lastMatches = searcherImpl.find(text, pattern);
+            if (lastMatches.found())
+                return lastMatches;
         }
 //            lastMatches = searcherImpl.find(text, pattern).results().stream().flatMap(a -> Stream.of(a.start)).collect(Collectors.toList());
         return lastMatches;
@@ -49,6 +50,7 @@ public class Searcher extends Thread {
             searchingRunning = true;
             while (pattern.length() < text.length() / 2) {
                 for (int i = minPatternSize; i <= text.length() / 2; i++) {
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!NEW SIZE OF PATTERN " + i + "!!!!!!!!!!!!!!!!!!!!");
                     searchResult = checkAllPatterns(i);
                     if (searchResult.found()) {
                         matches = searchResult;
