@@ -40,7 +40,6 @@ public class Searcher extends Thread {
             if (lastMatches.found())
                 return lastMatches;
         }
-//            lastMatches = searcherImpl.find(text, pattern).results().stream().flatMap(a -> Stream.of(a.start)).collect(Collectors.toList());
         return lastMatches;
     }
 
@@ -50,7 +49,6 @@ public class Searcher extends Thread {
             searchingRunning = true;
             while (pattern.length() < text.length() / 2) {
                 for (int i = minPatternSize; i <= text.length() / 2; i++) {
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!NEW SIZE OF PATTERN " + i + "!!!!!!!!!!!!!!!!!!!!");
                     searchResult = checkAllPatterns(i);
                     if (searchResult.found()) {
                         matches = searchResult;

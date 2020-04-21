@@ -38,17 +38,9 @@ public class ThreadKeeper {
     public void start() {
         System.out.println("Thread pool size is " + threadPoolSize);
         if (startNumber > endNumber || threadPoolSize < 1) throw new IllegalArgumentException();
-        if (endNumber - startNumber < threadPoolSize) {
-            System.out.println("Wow, isn't it too much threads for so little amount of numbers?");
-            startTime = System.currentTimeMillis();
-            for (int i = startNumber; i <= endNumber; i++) {
-                new Thread(group, new PrimeNumberCounter(i, i, primes)).start();
-            }
-        } else {
-            tasks = setTasks(threadPoolSize, startNumber, endNumber);
-            for (int i = 0; i < threadPoolSize; i++) {
-                new Thread(group, new PrimeNumberCounter(i, tasks.get(i), primes,isSynchronized)).start();
-            }
+        tasks = setTasks(threadPoolSize, startNumber, endNumber);
+        for (int i = 0; i < threadPoolSize; i++) {
+            new Thread(group, new PrimeNumberCounter(i, tasks.get(i), primes, isSynchronized)).start();
         }
         while (group.activeCount() > 0) {
 

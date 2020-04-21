@@ -18,7 +18,6 @@ public class Displayer extends Thread {
 
     public Displayer(String name) {
         super(name);
-
     }
 
     private String readFromFile(String fileName) {
@@ -44,6 +43,9 @@ public class Displayer extends Thread {
             if (!searchingRunning) {
                 System.out.println("Enter file name");
                 fileName = scanner.nextLine();
+                if(fileName.equals("42")){
+                    break;
+                }
                 text = readFromFile(fileName);
                 if (searcher == null) {
                     searcher = new Searcher(this, minPatternSize, text, "Sequences Searcher");
