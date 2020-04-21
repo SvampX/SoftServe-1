@@ -22,19 +22,6 @@ public class PrimeNumberCounterCallable implements Callable<Integer> {
         this.isSynchronized = isSynchronized;
     }
 
-    public PrimeNumberCounterCallable(int id, int number, List<Integer> primes) {
-        this.id = id;
-        this.number = number;
-        this.primes = primes;
-    }
-
-    public PrimeNumberCounterCallable(int id, int startNumber, int endNumber, List<Integer> primes) {
-        this.id = id;
-        this.startNumber = startNumber;
-        this.endNumber = endNumber;
-        this.primes = primes;
-    }
-
     private void calculate(int number) {
         isPrime = true;
         for (int i = 2; i < number / 2; i++) {
@@ -57,10 +44,6 @@ public class PrimeNumberCounterCallable implements Callable<Integer> {
         synchronized (primes) {
             primes.addAll(localPrimes);
         }
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     @Override

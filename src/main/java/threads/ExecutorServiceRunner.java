@@ -43,9 +43,7 @@ public class ExecutorServiceRunner {
         for (int i = 0; i <futures.size() ; i++) {
             try {
                 futures.get(i).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }

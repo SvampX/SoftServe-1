@@ -19,12 +19,6 @@ public class PrimeNumberCounter extends Thread {
         this.isSynchronized = isSynchronized;
     }
 
-    public PrimeNumberCounter(int id, int number, List<Integer> primes) {
-        this.id = id;
-        this.number = number;
-        this.primes = primes;
-    }
-
     private void calculate(int number) {
         isPrime = true;
         for (int i = 2; i < number / 2; i++) {
@@ -59,9 +53,5 @@ public class PrimeNumberCounter extends Thread {
         System.err.println("localPrimes of Thread-" + id + " = " + localPrimes);
         if (!isSynchronized)
             saveAllPrimes(localPrimes);
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 }
