@@ -2,26 +2,36 @@ package threads;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class PrimeNumberCounter extends Thread {
+public class PrimeNumberCounterCallable implements Callable<Integer> {
     List<Integer> task;
     List<Integer> primes;
     List<Integer> localPrimes = new ArrayList<>();
     private boolean isSynchronized;
     private int id;
     private int number;
+    private int startNumber;
+    private int endNumber;
     private boolean isPrime;
 
-    public PrimeNumberCounter(int id, List<Integer> task, List<Integer> primes, boolean isSynchronized) {
+    public PrimeNumberCounterCallable(int id, List<Integer> task, List<Integer> primes, boolean isSynchronized) {
         this.id = id;
         this.task = task;
         this.primes = primes;
         this.isSynchronized = isSynchronized;
     }
 
-    public PrimeNumberCounter(int id, int number, List<Integer> primes) {
+    public PrimeNumberCounterCallable(int id, int number, List<Integer> primes) {
         this.id = id;
         this.number = number;
+        this.primes = primes;
+    }
+
+    public PrimeNumberCounterCallable(int id, int startNumber, int endNumber, List<Integer> primes) {
+        this.id = id;
+        this.startNumber = startNumber;
+        this.endNumber = endNumber;
         this.primes = primes;
     }
 
@@ -49,9 +59,12 @@ public class PrimeNumberCounter extends Thread {
         }
     }
 
-    @Override
-    public void run() {
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
+    @Override
+    public Integer call() throws Exception {
         for (int i = 0; i < task.size(); i++) {
             calculate(task.get(i));
         }
@@ -59,9 +72,6 @@ public class PrimeNumberCounter extends Thread {
         System.err.println("localPrimes of Thread-" + id + " = " + localPrimes);
         if (!isSynchronized)
             saveAllPrimes(localPrimes);
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
+        return 42;
     }
 }

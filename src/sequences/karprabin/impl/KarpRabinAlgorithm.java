@@ -3,7 +3,7 @@ package sequences.karprabin.impl;
 import sequences.karprabin.data.Result;
 import sequences.karprabin.data.ResultSet;
 
-public class RK{
+public class KarpRabinAlgorithm {
 
     private static final int COEFFICIENT = 2;
     private static final int MAX_VALUE = Integer.MAX_VALUE;
