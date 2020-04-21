@@ -16,32 +16,8 @@ public class SecondAnnotatedClass {
     public SecondAnnotatedClass() {
     }
 
-    public void initService(){
-        System.out.println("I am very lazy");
-    }
-
     public Date getBirth() {
         return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public Date getDeath() {
-        return death;
-    }
-
-    public void setDeath(Date death) {
-        this.death = death;
-    }
-
-    public String getContributions() {
-        return contributions;
-    }
-
-    public void setContributions(String contributions) {
-        this.contributions = contributions;
     }
 
     @Override
